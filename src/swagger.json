@@ -1,0 +1,853 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API obras publicas",
+        "description": "API que contem as rotas utilizadas pelo site obras publicas",
+        "version": "3.0.0"
+    },
+    "servers": [
+        {
+            "url":"https://obras-publicas-{ambiente}.herokuapp.com/",
+            "variables":{
+                "ambiente":{
+                    "default": "qa",
+                    "description": "Ambiente desejado",
+                    "enum":[
+                        "qa",
+                        "prod"
+                    ]
+                }
+            }
+        },
+        {
+            "url": "http://localhost:3000",
+            "description": "API de Desenvolvimento"
+        }
+    ],
+    "paths":{
+        "/users/create":{
+            "post":{
+                "summary": "Cadastro de novos usuarios",
+                "description": "Essa rota ira cadastrar novas usuarios na aplicação",
+                "tags": ["Users"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "nome": "teste",
+                                        "email": "teste@email.com",
+                                        "senha": "senhasegura123",
+                                        "role": "admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": {
+                        "description": "Email ja cadastrado"
+                    },
+                    "200":{
+                        "description": "Usuario criado com sucesso"
+                    }
+                }
+            }
+        },
+        "/users/login":{
+            "post":{
+                "summary":"Fazer login",
+                "description": "Rota para fazer autenticacao de um usuario",
+                "tags":["Users"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "senha":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "login":{
+                                    "value":{
+                                        "email":"teste@email.com",
+                                        "senha": "senhasegura123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/Error"                                                  
+                                }
+                            }
+                        }                       
+                    },
+                    "200":{
+                        "description":"OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "auth":{
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }                                    
+                                    }
+                                }
+                            }
+                        }    
+                    }
+                }
+            }
+        },
+        "/users":{
+            "get":{
+                "summary": "Buscar todos os usuarios",
+                "description": "Retorna todos os usuarios da aplicacao",
+                "tags":["Users"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/find/{queryParam}/{queryValue}":{
+            "get":{
+                "summary": "Filtrar usuarios",
+                "description": "FIltrar usuarios por qualquer campo e valor",
+                "tags":["Users"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"queryParam",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in":"path",
+                        "name":"queryValue",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/update/all/{userId}":{
+            "put":{
+                "summary": "Atualizar dados do usuario",
+                "tags":["Users"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[{
+                    "in":"path",
+                    "name":"userId",
+                    "schema": {
+                        "type":"number"
+                    },
+                    "required":true
+                }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "nome": "testeEditado",
+                                        "email": "testeEditado@email.com",
+                                        "senha": "senhasegura123",
+                                        "role": "common"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "409": {
+                        "description": "Email ja cadastrado",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "200":{
+                        "description": "OK!"
+                    }
+                }
+            }
+        },
+        "/users/update/one/{userId}":{
+            "patch":{
+                "summary": "Atualizar senha do usuario",
+                "tags":["Users"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[{
+                    "in":"path",
+                    "name":"userId",
+                    "schema": {
+                        "type":"number"
+                    },
+                    "required":true
+                }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "senha":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "novaSenha":{
+                                    "value":{
+                                        "senha":"senhaseguraeditada123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "404":{
+                        "description": "Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "200":{
+                        "description": "OK!"
+                    }
+                }
+            }
+        },
+        "/users/delete/one/{userId}":{
+            "delete":{
+                "summary": "Excluir usuario",
+                "tags":["Users"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[{
+                    "in":"path",
+                    "name":"userId",
+                    "description": "Usuario para ser excluido",
+                    "schema": {
+                        "type":"number"
+                    },
+                    "required":true
+                }],
+                "responses":{
+                    "404":{
+                        "description": "Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "200":{
+                        "description": "OK!"
+                    }
+                }
+            }
+        },
+        "/themes":{
+            "get":{
+                "summary": "Buscar todos os temas de denuncia",
+                "description": "Retorna um array com todos os temas de denuncia na plataforma, independente se estao ativos ou nao",
+                "tags":["Themes"],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ArrayOfThemes"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found"
+                    }
+                }
+            }
+        },
+        "/themes/find/active/{ativo}":{
+            "get":{
+                "summary": "Buscar todos os temas de denuncia",
+                "description": "Retorna um array com todos os temas de denuncia ativos na plataforma",
+                "tags":["Themes"],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"ativo",
+                        "schema":{
+                            "type":"boolean",
+                            "default":true
+                        },
+                        "required":true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ArrayOfThemes"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found"
+                    }
+                }
+            }
+        },
+        "/themes/create":{
+            "post":{
+                "summary":"Cadastrar novos temas de denuncia",
+                "tags":["Themes"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Themes"
+                            },
+                            "examples":{
+                                "theme":{
+                                    "value":{
+                                        "nome": "Tema teste",
+                                        "url": "https://google.com",
+                                        "ativo": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Tema criada com sucesso"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/themes/update/all/{themeId}":{
+            "put":{
+                "summary": "Atualizar dados do tema",
+                "tags":["Themes"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"themeId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Themes"
+                            },
+                            "examples":{
+                                "theme":{
+                                    "value":{
+                                        "nome":"Tema teste editado",
+                                        "url": "http://localhost:3000",
+                                        "ativo": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Tema atualizado com sucesso"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/themes/update/one/{themeId}":{
+            "patch": {
+                "summary":"Ativar ou desativar tema",
+                "tags":["Themes"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"themeId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Tema atualizado com sucesso"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/themes/delete/one/{themeId}":{
+            "delete":{
+                "summary":"Excluir tema",
+                "tags":["Themes"],
+                "security":[{
+                    "ApiKeyAuth": []
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"themeId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Tema excluido com sucesso"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+        "schemas":{
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email para acessar o sistema. O email deve ser unico"
+                    },
+                    "senha":{
+                        "type": "string"
+                    },
+                    "role":{
+                        "type": "string",
+                        "enum": ["common", "admin"]
+                    }
+                }
+            },
+            "ArrayOfUsers":{
+                "type":"array",
+                "items":{
+                    "type":"object",
+                    "$ref": "#/components/schemas/User"
+                }
+            },
+            "Error":{
+                "type":"object",
+                "properties": {
+                    "Status": {
+                        "type": "number"
+                    },
+                    "Mensagem": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AuthError":{
+                "type":"object",
+                "properties":{
+                    "auth":{
+                        "type":"boolean",
+                        "default":"false"
+                    },
+                    "mensagem":{
+                        "type":"string"
+                    }
+                }
+            },
+            "Themes":{
+                "type":"object",
+                "properties":{
+                    "nome":{
+                        "type":"string"
+                    },
+                    "url":{
+                        "type":"string"
+                    },
+                    "ativo":{
+                        "type":"boolean",
+                        "default": true
+                    }
+                }
+            },
+            "ArrayOfThemes":{
+                "type": "array",
+                "items":{
+                    "type":"object",
+                    "$ref":"#/components/schemas/Themes"
+                }
+            }
+        },
+        "securitySchemes":{
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-access-token"
+            }
+        }
+    }
+}

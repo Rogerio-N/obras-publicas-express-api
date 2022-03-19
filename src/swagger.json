@@ -766,6 +766,351 @@
                     }
                 }
             }
+        },
+        "/complaints":{
+            "get":{
+                "summary": "Mostrar todas as denuncias",
+                "tags": ["Complaint"],
+                "security":[{
+                    "ApiKeyAuth":[]
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/complaints/find/all/{userId}":{
+            "get":{
+                "summary": "Mostrar todas as denuncias de um usuario",
+                "tags": ["Complaint"],
+                "security":[{
+                    "ApiKeyAuth":[]
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"userId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/complaints/find/one/{userId}/{complaintId}":{
+            "get":{
+                "summary": "Mostrar uma denuncias especifica de um usuario",
+                "tags": ["Complaint"],
+                "security":[{
+                    "ApiKeyAuth":[]
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"userId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in":"path",
+                        "name":"complaintId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/complaints/create":{
+            "post":{
+                "summary": "Criar denuncia",
+                "tags":["Complaint"],
+                "security":[{
+                    "ApiKeyAuth":[]
+                }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Complaints"
+                            },
+                            "examples":{
+                                "denuncia":{
+                                    "value":{
+                                        "cep": "79103480", 
+                                        "rua": "Rua teste", 
+                                        "bairro": "Bairro teste", 
+                                        "numero": "12",
+                                        "descricao": "descricao", 
+                                        "imageUrl": "url",
+                                        "dataDenuncia": "2022-03-08", 
+                                        "dataFinalizacao": "2022-04-08",
+                                        "status": "Em andamento", 
+                                        "idUser": 14,
+                                        "idTheme": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Denuncia criada com sucesso!"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/complaints/update/one/{complaintId}":{
+            "patch":{
+                "summary": "Atualizar status da denuncia",
+                "tags": ["Complaint"],
+                "security":[{
+                    "ApiKeyAuth":[]
+                }],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"userId",
+                        "schema":{
+                            "type":"number"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "newStatus":{
+                                        "type":"string",
+                                        "enum":["Aguardando resposta", "Em andamento", "Negada", "Finalizada"]
+                                    } 
+                                }
+                            },
+                            "examples":{
+                                "denuncia":{
+                                    "value":{
+                                        "newStatus":"Em andamento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Denuncia atualizada com sucesso!"
+                    },
+                    "400":{
+                        "description": "Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components":{
@@ -773,6 +1118,9 @@
             "User": {
                 "type": "object",
                 "properties": {
+                    "id":{
+                        "type":"number"
+                    },
                     "name": {
                         "type": "string"
                     },
@@ -822,6 +1170,9 @@
             "Themes":{
                 "type":"object",
                 "properties":{
+                    "id":{
+                        "type":"number"
+                    },
                     "nome":{
                         "type":"string"
                     },
@@ -839,6 +1190,61 @@
                 "items":{
                     "type":"object",
                     "$ref":"#/components/schemas/Themes"
+                }
+            },
+            "Complaints":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"number"
+                    },
+                    "cep":{
+                        "type":"string"
+                    },
+                    "rua": {
+                        "type": "string"
+                    },
+                    "bairro":{
+                        "type": "string"
+                    },
+                    "numero":{
+                        "type": "string",
+                        "description": "numero da rua"
+                    },
+                    "descricao":{
+                        "type": "string"
+                    },
+                    "imageUrl":{
+                        "type":"string"
+                    },
+                    "datadenuncia":{
+                        "type":"string",
+                        "format":"date-time"
+                    },
+                    "datafinalizacao":{
+                        "type":"string",
+                        "format":"date-time"
+                    },
+                    "respostas":{
+                        "type":"string"
+                    },
+                    "status":{
+                        "type": "string",
+                        "enum": ["Aguardando resposta", "Em andamento", "Negada", "Finalizada"]
+                    },
+                    "iduser":{
+                        "type": "number"
+                    },
+                    "idtheme":{
+                        "type": "number"
+                    }
+                }
+            },
+            "ArrayOfComplaints":{
+                "type":"array",
+                "items":{
+                    "type":"object",
+                    "$ref":"#/components/schemas/Complaints"
                 }
             }
         },

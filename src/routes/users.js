@@ -10,6 +10,7 @@ export const userRouter = express.Router();
 
 userRouter.get('/', verifyJWT, async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const showUsers = await findAllUsers();
     if(showUsers.rowCount == 0){
         return res.status(notFound('Usuario').Status).json(notFound('usuario'))
@@ -19,6 +20,7 @@ userRouter.get('/', verifyJWT, async (req, res) => {
 
 userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const showUsers = await findUserBy(req.params.queryParam, req.params.queryValue);
     if(showUsers.rowCount == 0){
         return res.status(notFound('Usuario').Status).json(notFound('usuario'))
@@ -28,6 +30,7 @@ userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
 
 userRouter.post('/create', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const userBody = req.body;
     const createUserQuery = await createUser(userBody.nome, userBody.email, userBody.senha, userBody.role);
     if(createUserQuery == "email ja existente"){
@@ -40,6 +43,7 @@ userRouter.post('/create', async(req, res) => {
 
 userRouter.post('/login', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const userBody = req.body;
     const createUserQuery = await login(userBody.email, userBody.senha);
     if(createUserQuery=="Usuario ou senha incorretos"){
@@ -53,6 +57,7 @@ userRouter.post('/login', async(req, res) => {
 
 userRouter.put('/update/all/:userId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const requestBody = req.body;
     const updateUserQuery = await updateUser(req.params.userId, requestBody.nome, requestBody.email);
     if(updateUserQuery == "notFound"){
@@ -67,6 +72,7 @@ userRouter.put('/update/all/:userId', verifyJWT, async(req, res) => {
 
 userRouter.patch('/update/one/:userId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const requestBody = req.body;
     const updateUserPasswordQuery = await updateUserPassword(req.params.userId, requestBody.senha);
     if(updateUserPasswordQuery == "notFound"){
@@ -79,6 +85,7 @@ userRouter.patch('/update/one/:userId', verifyJWT, async(req, res) => {
 
 userRouter.delete('/delete/one/:userId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const deleteUserQuery = await deleteUser(req.params.userId);
     if(deleteUserQuery=="notFound"){
         return res.status(notFound('usuario').Status).json(notFound('usuario'))

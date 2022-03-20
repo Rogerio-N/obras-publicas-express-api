@@ -7,6 +7,7 @@ export const complaintRouter = express.Router();
 
 complaintRouter.get('/', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const complaintQuery = await findAllComplaints();
     if(complaintQuery.rowCount == 0){
         return res.status(notFound().Status).json(notFound("denuncia"))
@@ -16,6 +17,7 @@ complaintRouter.get('/', verifyJWT, async(req, res) => {
 
 complaintRouter.post('/create', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const requestBody = req.body;
     const complaintCreateQuery = await createComplaint(requestBody.rua, requestBody.bairro, requestBody.numero, requestBody.dataDenuncia, requestBody.dataFinalizacao, requestBody.status, requestBody.idUser, requestBody.idTheme, requestBody.cep, requestBody.descricao, requestBody.imageUrl, requestBody.resposta)
     if(complaintCreateQuery == "badRequest"){
@@ -30,6 +32,7 @@ complaintRouter.post('/create', verifyJWT, async(req, res) => {
 
 complaintRouter.get('/find/all/:userId', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const complaintQuery = await findAllUserComplaint(req.params.userId);
     if(complaintQuery=="notFound"){
         return res.status(notFound().Status).json(notFound("usuario"))
@@ -41,6 +44,7 @@ complaintRouter.get('/find/all/:userId', async (req, res) => {
 
 complaintRouter.get('/find/one/:userId/:complaintId', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const complaintQuery = await findOneUserComplaint(req.params.userId, req.params.complaintId);
     if(complaintQuery == "notFound complaint"){
         return res.status(notFound().Status).json(notFound("denuncia"))
@@ -54,6 +58,7 @@ complaintRouter.get('/find/one/:userId/:complaintId', async(req, res) => {
 
 complaintRouter.patch('/update/one/:complaintId', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const statusQuery = await updateComplaintStatus(req.params.complaintId, req.body.newStatus);
     if(statusQuery == "badRequest"){
         return res.status(badRequest().Status).json(badRequest())

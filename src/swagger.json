@@ -32,7 +32,7 @@
                 "tags": ["Users"],
                 "requestBody":{
                     "content": {
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref": "#/components/schemas/User"
                             },
@@ -74,7 +74,7 @@
                 "tags":["Users"],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type": "object",
                                 "properties":{
@@ -280,7 +280,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/User"
                             },
@@ -373,7 +373,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type":"object",
                                 "properties":{
@@ -582,7 +582,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Themes"
                             },
@@ -653,7 +653,7 @@
                 ],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Themes"
                             },
@@ -1046,7 +1046,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Complaints"
                             },
@@ -1137,7 +1137,7 @@
                 ],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type":"object",
                                 "properties":{

@@ -858,7 +858,7 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
@@ -923,7 +923,7 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
@@ -996,7 +996,7 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
@@ -1072,7 +1072,15 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Denuncia criada com sucesso!"
+                        "description": "Denuncia criada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessComplaintMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "description": "Bad request - Token nao enviado",
@@ -1151,7 +1159,15 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Denuncia atualizada com sucesso!"
+                        "description": "Denuncia atualizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessComplaintMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "description": "Bad request - Token nao enviado",
@@ -1366,13 +1382,6 @@
                     }
                 }
             },
-            "ArrayOfThemes":{
-                "type": "array",
-                "items":{
-                    "type":"object",
-                    "$ref":"#/components/schemas/Themes"
-                }
-            },
             "Complaints":{
                 "type":"object",
                 "properties":{
@@ -1426,6 +1435,39 @@
                 "items":{
                     "type":"object",
                     "$ref":"#/components/schemas/Complaints"
+                }
+            },
+            "SuccessComplaintQuery": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "$ref": "#/components/schemas/Complaints"
+                        }
+                    }
+                }
+            },
+            "SuccessComplaintMessage": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type": "array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

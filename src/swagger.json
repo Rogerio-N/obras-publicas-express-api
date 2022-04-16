@@ -54,7 +54,15 @@
                         "description": "Email ja cadastrado"
                     },
                     "200":{
-                        "description": "Usuario criado com sucesso"
+                        "description": "Usuario criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -108,6 +116,9 @@
                                 "schema":{
                                     "type": "object",
                                     "properties":{
+                                        "Stauts":{
+                                            "type": "number"
+                                        },
                                         "auth":{
                                             "type": "boolean"
                                         },
@@ -137,7 +148,7 @@
                             "application/json":{
                                 "schema":{
                                     "type":"array",
-                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                    "$ref":"#/components/schemas/SuccessUserQuery"
                                 }
                             }
                         }
@@ -211,7 +222,7 @@
                             "application/json":{
                                 "schema":{
                                     "type":"array",
-                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                    "$ref":"#/components/schemas/SuccessUserQuery"
                                 }
                             }
                         }
@@ -332,7 +343,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -408,7 +427,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -464,7 +491,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1137,11 +1172,56 @@
                     }
                 }
             },
-            "ArrayOfUsers":{
-                "type":"array",
-                "items":{
-                    "type":"object",
-                    "$ref": "#/components/schemas/User"
+            "SuccessUserQuery": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "id":{
+                                    "type":"number"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "Email para acessar o sistema. O email deve ser unico"
+                                },
+                                "senha":{
+                                    "type": "string"
+                                },
+                                "role":{
+                                    "type": "string",
+                                    "enum": ["common", "admin"]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "SuccessUserMessage":{
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem": {
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "Error":{
@@ -1150,14 +1230,25 @@
                     "Status": {
                         "type": "number"
                     },
-                    "Mensagem": {
-                        "type": "string"
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             },
             "AuthError":{
                 "type":"object",
                 "properties":{
+                    "Status":{
+                        "type": "number"
+                    },
                     "auth":{
                         "type":"boolean",
                         "default":"false"

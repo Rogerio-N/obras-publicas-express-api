@@ -17,6 +17,7 @@ const swaggerDocs = JSON.parse(
 )
 
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))

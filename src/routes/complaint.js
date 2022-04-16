@@ -18,7 +18,7 @@ complaintRouter.get('/', verifyJWT, async(req, res) => {
 complaintRouter.post('/create', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const requestBody = req.body;
+    const requestBody = JSON.parse(req.body);
     const complaintCreateQuery = await createComplaint(requestBody.rua, requestBody.bairro, requestBody.numero, requestBody.dataDenuncia, requestBody.dataFinalizacao, requestBody.status, requestBody.idUser, requestBody.idTheme, requestBody.cep, requestBody.descricao, requestBody.imageUrl, requestBody.resposta)
     if(complaintCreateQuery == "badRequest"){
         return res.status(badRequest().Status).json(badRequest())
@@ -59,7 +59,7 @@ complaintRouter.get('/find/one/:userId/:complaintId', async(req, res) => {
 complaintRouter.patch('/update/one/:complaintId', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const statusQuery = await updateComplaintStatus(req.params.complaintId, req.body.newStatus);
+    const statusQuery = await updateComplaintStatus(req.params.complaintId, JSON.parse(req.body).newStatus);
     if(statusQuery == "badRequest"){
         return res.status(badRequest().Status).json(badRequest())
     }else if(statusQuery == "notFound"){

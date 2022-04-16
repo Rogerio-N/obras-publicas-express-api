@@ -31,7 +31,7 @@ userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
 userRouter.post('/create', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const userBody = req.body;
+    const userBody = JSON.parse(req.body);
     const createUserQuery = await createUser(userBody.nome, userBody.email, userBody.senha, userBody.role);
     if(createUserQuery == "email ja existente"){
         return res.status(duplicatedValue("email").Status).json(duplicatedValue("email"))
@@ -44,7 +44,7 @@ userRouter.post('/create', async(req, res) => {
 userRouter.post('/login', async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const userBody = req.body;
+    const userBody = JSON.parse(req.body);
     const createUserQuery = await login(userBody.email, userBody.senha);
     if(createUserQuery=="Usuario ou senha incorretos"){
         return res.status(unauthorized().Status).json(unauthorized())
@@ -58,7 +58,7 @@ userRouter.post('/login', async(req, res) => {
 userRouter.put('/update/all/:userId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const requestBody = req.body;
+    const requestBody = JSON.parse(req.body);
     const updateUserQuery = await updateUser(req.params.userId, requestBody.nome, requestBody.email);
     if(updateUserQuery == "notFound"){
         return res.status(notFound('usuario').Status).json(notFound('usuario'))
@@ -73,7 +73,7 @@ userRouter.put('/update/all/:userId', verifyJWT, async(req, res) => {
 userRouter.patch('/update/one/:userId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const requestBody = req.body;
+    const requestBody = JSON.parse(req.body);
     const updateUserPasswordQuery = await updateUserPassword(req.params.userId, requestBody.senha);
     if(updateUserPasswordQuery == "notFound"){
         return res.status(notFound('usuario').Status).json(notFound('usuario'))

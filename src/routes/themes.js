@@ -19,7 +19,7 @@ themesRouter.get('/', async(req, res) => {
 themesRouter.post('/create', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const bodyRequest = req.body;
+    const bodyRequest = JSON.parse(req.body);
     const createThemeQuery = await createTheme(bodyRequest.nome, bodyRequest.url, bodyRequest.ativo)
     if(createThemeQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
@@ -42,7 +42,7 @@ themesRouter.delete('/delete/one/:themeId', verifyJWT, async(req, res) => {
 themesRouter.put('/update/all/:themeId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const updateQuery = await updateThemeInfo(req.params.themeId, req.body.nome, req.body.url, req.body.ativo)
+    const updateQuery = await updateThemeInfo(req.params.themeId, JSON.parse(req.body).nome, JSON.parse(req.body).url, JSON.parse(req.body).ativo)
     if(updateQuery == "notFound"){
         return res.status(notFound('tema').Status).json(notFound('tema'))
     }else if(updateQuery.rowCount == 0){
@@ -54,7 +54,7 @@ themesRouter.put('/update/all/:themeId', verifyJWT, async(req, res) => {
 themesRouter.patch('/update/one/:themeId', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*')
-    const updateActivenessQuery = await updateThemeActiveness(req.params.themeId, req.body.ativo)
+    const updateActivenessQuery = await updateThemeActiveness(req.params.themeId, JSON.parse(req.body).ativo)
     if(updateActivenessQuery == "notFound"){
         return res.status(notFound('tema').Status).json(notFound('tema'))
     }else if(updateActivenessQuery.rowCount == 0){

@@ -1,7 +1,9 @@
 export default function serverError(){
     const error = {
         "Status": 500,
-        "Mensagem": "Erro inesperado no servidor"
+        "Content": [{
+            "Mensagem": "Erro inesperado no servidor"
+        }]
     }
     return error;
 }

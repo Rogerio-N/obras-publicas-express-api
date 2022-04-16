@@ -9,9 +9,10 @@ const client = new pg.Client({
     database: process.env.DB,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl: false
+    // {
+    //     rejectUnauthorized: false
+    // }
 })
 
 client.connect();

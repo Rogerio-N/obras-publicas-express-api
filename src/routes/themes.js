@@ -13,7 +13,11 @@ themesRouter.get('/', async(req, res) => {
     if(themesQuery.rowCount == 0){
         return res.status(notFound('tema').Status).json(notFound('tema'))
     }
-    return res.status(200).json(themesQuery.rows);
+    const success = {
+        "Status": 200,
+        "Content": themesQuery.rows
+    }
+    return res.status(200).json(success);
 })
 
 themesRouter.post('/create', verifyJWT, async(req, res) => {
@@ -24,7 +28,11 @@ themesRouter.post('/create', verifyJWT, async(req, res) => {
     if(createThemeQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Tema criado com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Tema criado com sucesso"}]
+    }
+    return res.status(200).json(success);
 })
 
 themesRouter.delete('/delete/one/:themeId', verifyJWT, async(req, res) => {
@@ -36,7 +44,11 @@ themesRouter.delete('/delete/one/:themeId', verifyJWT, async(req, res) => {
     }else if(deleteQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Tema excluido com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Tema excluido com sucesso"}]
+    }
+    return res.status(200).json(success);
 })
 
 themesRouter.put('/update/all/:themeId', verifyJWT, async(req, res) => {
@@ -48,7 +60,11 @@ themesRouter.put('/update/all/:themeId', verifyJWT, async(req, res) => {
     }else if(updateQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Tema atualizado com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Tema atualizado com sucesso"}]
+    }
+    return res.status(200).json(success);
 })
 
 themesRouter.patch('/update/one/:themeId', verifyJWT, async(req, res) => {
@@ -60,7 +76,11 @@ themesRouter.patch('/update/one/:themeId', verifyJWT, async(req, res) => {
     }else if(updateActivenessQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Tema atualizado com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Tema atualizado com sucesso"}]
+    }
+    return res.status(200).json(success);
 });
 
 themesRouter.get('/find/active/:ativo', async(req, res) => {
@@ -70,5 +90,9 @@ themesRouter.get('/find/active/:ativo', async(req, res) => {
     if(themesQuery.rowCount == 0){
         return res.status(notFound('tema').Status).json(notFound('tema'))
     }
-    return res.status(200).json(themesQuery.rows);
+    const success = {
+        "Status": 200,
+        "Content": themesQuery.rows
+    }
+    return res.status(200).json(success);
 })

@@ -32,7 +32,7 @@
                 "tags": ["Users"],
                 "requestBody":{
                     "content": {
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref": "#/components/schemas/User"
                             },
@@ -54,7 +54,15 @@
                         "description": "Email ja cadastrado"
                     },
                     "200":{
-                        "description": "Usuario criado com sucesso"
+                        "description": "Usuario criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -66,7 +74,7 @@
                 "tags":["Users"],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type": "object",
                                 "properties":{
@@ -108,6 +116,9 @@
                                 "schema":{
                                     "type": "object",
                                     "properties":{
+                                        "Stauts":{
+                                            "type": "number"
+                                        },
                                         "auth":{
                                             "type": "boolean"
                                         },
@@ -137,13 +148,13 @@
                             "application/json":{
                                 "schema":{
                                     "type":"array",
-                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                    "$ref":"#/components/schemas/SuccessUserQuery"
                                 }
                             }
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -211,13 +222,13 @@
                             "application/json":{
                                 "schema":{
                                     "type":"array",
-                                    "$ref":"#/components/schemas/ArrayOfUsers"
+                                    "$ref":"#/components/schemas/SuccessUserQuery"
                                 }
                             }
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -269,7 +280,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/User"
                             },
@@ -310,7 +321,7 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -332,7 +343,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -354,7 +373,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type":"object",
                                 "properties":{
@@ -386,7 +405,7 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -408,7 +427,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -442,7 +469,7 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -464,7 +491,15 @@
                         }
                     },
                     "200":{
-                        "description": "OK!"
+                        "description": "OK!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessUserMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -480,13 +515,20 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ArrayOfThemes"
+                                    "$ref":"#/components/schemas/SuccessThemesQuery"
                                 }
                             }
                         }
                     },
                     "404":{
-                        "description":"Not Found"
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -513,13 +555,20 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ArrayOfThemes"
+                                    "$ref":"#/components/schemas/SuccessThemesQuery"
                                 }
                             }
                         }
                     },
                     "404":{
-                        "description":"Not Found"
+                        "description":"Not Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -533,7 +582,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Themes"
                             },
@@ -551,10 +600,17 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Tema criada com sucesso"
+                        "description": "Tema criada com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SuccessThemesMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -597,7 +653,7 @@
                 ],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Themes"
                             },
@@ -615,10 +671,17 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Tema atualizado com sucesso"
+                        "description": "Tema atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SuccessThemesMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -672,10 +735,17 @@
                 ],
                 "responses":{
                     "200":{
-                        "description": "Tema atualizado com sucesso"
+                        "description": "Tema atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SuccessThemesMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -729,10 +799,17 @@
                 ],
                 "responses":{
                     "200":{
-                        "description": "Tema excluido com sucesso"
+                        "description": "Tema excluido com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SuccessThemesMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -781,13 +858,13 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -846,13 +923,13 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -919,13 +996,13 @@
                             "application/json":{
                                 "schema":{
                                     "type":"object",
-                                    "$ref":"#/components/schemas/ArrayOfComplaints"
+                                    "$ref":"#/components/schemas/SuccessComplaintQuery"
                                 }
                             }
                         }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -969,7 +1046,7 @@
                 }],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "$ref":"#/components/schemas/Complaints"
                             },
@@ -995,10 +1072,18 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Denuncia criada com sucesso!"
+                        "description": "Denuncia criada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessComplaintMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -1052,7 +1137,7 @@
                 ],
                 "requestBody":{
                     "content":{
-                        "application/json":{
+                        "text/plain":{
                             "schema":{
                                 "type":"object",
                                 "properties":{
@@ -1074,10 +1159,18 @@
                 },
                 "responses":{
                     "200":{
-                        "description": "Denuncia atualizada com sucesso!"
+                        "description": "Denuncia atualizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/SuccessComplaintMessage"
+                                }
+                            }
+                        }
                     },
                     "400":{
-                        "description": "Bad request",
+                        "description": "Bad request - Token nao enviado",
                         "content":{
                             "application/json":{
                                 "schema":{
@@ -1137,11 +1230,56 @@
                     }
                 }
             },
-            "ArrayOfUsers":{
-                "type":"array",
-                "items":{
-                    "type":"object",
-                    "$ref": "#/components/schemas/User"
+            "SuccessUserQuery": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "id":{
+                                    "type":"number"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "Email para acessar o sistema. O email deve ser unico"
+                                },
+                                "senha":{
+                                    "type": "string"
+                                },
+                                "role":{
+                                    "type": "string",
+                                    "enum": ["common", "admin"]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "SuccessUserMessage":{
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem": {
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "Error":{
@@ -1150,14 +1288,25 @@
                     "Status": {
                         "type": "number"
                     },
-                    "Mensagem": {
-                        "type": "string"
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             },
             "AuthError":{
                 "type":"object",
                 "properties":{
+                    "Status":{
+                        "type": "number"
+                    },
                     "auth":{
                         "type":"boolean",
                         "default":"false"
@@ -1185,11 +1334,52 @@
                     }
                 }
             },
-            "ArrayOfThemes":{
-                "type": "array",
-                "items":{
-                    "type":"object",
-                    "$ref":"#/components/schemas/Themes"
+            "SuccessThemesQuery": {
+                "type": "object",
+                "properties": {
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties": {
+                                "id":{
+                                    "type":"number"
+                                },
+                                "nome":{
+                                    "type":"string"
+                                },
+                                "url":{
+                                    "type":"string"
+                                },
+                                "ativo":{
+                                    "type":"boolean",
+                                    "default": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "SuccessThemesMessage":{
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem": {
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "Complaints":{
@@ -1245,6 +1435,39 @@
                 "items":{
                     "type":"object",
                     "$ref":"#/components/schemas/Complaints"
+                }
+            },
+            "SuccessComplaintQuery": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type":"array",
+                        "items":{
+                            "$ref": "#/components/schemas/Complaints"
+                        }
+                    }
+                }
+            },
+            "SuccessComplaintMessage": {
+                "type": "object",
+                "properties":{
+                    "Status":{
+                        "type":"number"
+                    },
+                    "Content":{
+                        "type": "array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "Mensagem":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

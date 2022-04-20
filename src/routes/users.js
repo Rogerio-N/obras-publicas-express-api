@@ -15,7 +15,11 @@ userRouter.get('/', verifyJWT, async (req, res) => {
     if(showUsers.rowCount == 0){
         return res.status(notFound('Usuario').Status).json(notFound('usuario'))
     }
-    return res.status(200).json(showUsers.rows);
+    const success = {
+        "Status": 200,
+        "Content": showUsers.rows
+    }
+    return res.status(200).json(success);
 });
 
 userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
@@ -25,7 +29,11 @@ userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
     if(showUsers.rowCount == 0){
         return res.status(notFound('Usuario').Status).json(notFound('usuario'))
     }
-    return res.status(200).json(showUsers.rows);
+    const success = {
+        "Status": 200,
+        "Content": showUsers.rows
+    }
+    return res.status(200).json(success);
 })
 
 userRouter.post('/create', async(req, res) => {
@@ -38,7 +46,13 @@ userRouter.post('/create', async(req, res) => {
     }else if(createUserQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Usuario criado com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [
+            {"Mensagem": "Usuario criado com sucesso"}
+        ]
+    }
+    return res.status(200).json(success)
 });
 
 userRouter.post('/login', async(req, res) => {
@@ -50,6 +64,7 @@ userRouter.post('/login', async(req, res) => {
         return res.status(unauthorized().Status).json(unauthorized())
     }
     return res.status(200).json({
+        Status: 200,
         auth: true,
         message: createUserQuery
     })
@@ -67,7 +82,13 @@ userRouter.put('/update/all/:userId', verifyJWT, async(req, res) => {
     }else if(updateUserQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json("Usuario atualizado com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [
+            {"Mensagem": "Usuario atualizado com sucesso"}
+        ]
+    }
+    return res.status(200).json(success)
 })
 
 userRouter.patch('/update/one/:userId', verifyJWT, async(req, res) => {
@@ -80,7 +101,11 @@ userRouter.patch('/update/one/:userId', verifyJWT, async(req, res) => {
     }else if(updateUserPasswordQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json(updateUserPasswordQuery.rows)
+    const success = {
+        "Status": 200,
+        "Content": updateUserPasswordQuery.rows
+    }
+    return res.status(200).json(success);
 })
 
 userRouter.delete('/delete/one/:userId', verifyJWT, async(req, res) => {
@@ -92,5 +117,11 @@ userRouter.delete('/delete/one/:userId', verifyJWT, async(req, res) => {
     }else if(deleteUserQuery.rowCount == 0){
         return res.status(serverError().Status).json(serverError())
     }
-    return res.status(200).json('Usuario excluido com sucesso')
+    const success = {
+        "Status": 200,
+        "Content": [
+            {"Mensagem": "Usuario excluido com sucesso"}
+        ]
+    }
+    return res.status(200).json(success)
 })

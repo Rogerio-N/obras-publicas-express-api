@@ -12,7 +12,11 @@ complaintRouter.get('/', verifyJWT, async(req, res) => {
     if(complaintQuery.rowCount == 0){
         return res.status(notFound().Status).json(notFound("denuncia"))
     }
-    return res.status(200).json(complaintQuery.rows)
+    const success = {
+        "Status": 200,
+        "Content": complaintQuery.rows
+    }
+    return res.status(200).json(success);
 });
 
 complaintRouter.post('/create', verifyJWT, async(req, res) => {
@@ -27,7 +31,11 @@ complaintRouter.post('/create', verifyJWT, async(req, res) => {
     }else if(complaintCreateQuery == "notFound user"){
         return res.status(notFound().Status).json(notFound("usuario"))
     }
-    return res.status(200).json("Denuncia criada com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Denuncia criada com sucesso"}]
+    }
+    return res.status(200).json(success);
 });
 
 complaintRouter.get('/find/all/:userId', async (req, res) => {
@@ -39,7 +47,11 @@ complaintRouter.get('/find/all/:userId', async (req, res) => {
     }else if(complaintQuery.rowCount == 0){
         return res.status(notFound().Status).json(notFound("denuncia"))
     }
-    return res.status(200).json(complaintQuery.rows)
+    const success = {
+        "Status": 200,
+        "Content": complaintQuery.rows
+    }
+    return res.status(200).json(success);
 });
 
 complaintRouter.get('/find/one/:userId/:complaintId', async(req, res) => {
@@ -53,7 +65,11 @@ complaintRouter.get('/find/one/:userId/:complaintId', async(req, res) => {
     }else if(complaintQuery.rowCount == 0){
         return res.status(notFound().Status).json(notFound("denuncia para esse usuario foi"))
     }
-    return res.status(200).json(complaintQuery.rows)
+    const success = {
+        "Status": 200,
+        "Content": complaintQuery.rows
+    }
+    return res.status(200).json(success);
 })
 
 complaintRouter.patch('/update/one/:complaintId', async(req, res) => {
@@ -65,5 +81,9 @@ complaintRouter.patch('/update/one/:complaintId', async(req, res) => {
     }else if(statusQuery == "notFound"){
         return res.status(notFound().Status).json(notFound("denuncia"))
     }
-    return res.status(200).json("Denuncia atualizada com sucesso")
+    const success = {
+        "Status": 200,
+        "Content": [{"Mensagem": "Denuncia atualizada com sucesso"}]
+    }
+    return res.status(200).json(success);
 })

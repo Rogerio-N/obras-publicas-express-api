@@ -24,7 +24,7 @@ userRouter.get('/', verifyJWT, async (req, res) => {
 
 userRouter.get('/find/:queryParam/:queryValue', verifyJWT, async(req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const showUsers = await findUserBy(req.params.queryParam, req.params.queryValue);
     if(showUsers.rowCount == 0){
         return res.status(notFound('Usuario').Status).json(notFound('usuario'))

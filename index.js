@@ -5,6 +5,7 @@ import { userRouter } from "./src/routes/users.js";
 import { readFile } from 'fs/promises';
 import { themesRouter } from "./src/routes/themes.js";
 import { complaintRouter } from "./src/routes/complaint.js";
+import cors from 'cors'
 
 import swaggerUi from 'swagger-ui-express'
 
@@ -19,7 +20,7 @@ const swaggerDocs = JSON.parse(
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended:true}));
-
+app.use(cors())
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use("/users", userRouter);
